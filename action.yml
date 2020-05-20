@@ -9,13 +9,15 @@ inputs:
         required: true
     version:
         description: 'API Version'
-        required: true
+        required: false
+        default: 'v3'
     page:
         description: 'ID of page to update'
         required: true
     readme:
         description: 'Path to README.md'
-        required: true
+        required: false
+        default: 'README.md'
 outputs:
     response:
         description: 'Ghost API Response'
