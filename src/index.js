@@ -11,13 +11,15 @@ const api = new GhostAdminAPI({
   version: core.getInput('version', { required: true })
 });
 
+const repo = process.env.GITHUB_WORKSPACE;
+
 // Make the call!
 api.pages.read({
   id: core.getInput('page', { required: true})
 })
   .then((pages) => {
     fs = require('fs')
-    fs.readFile(core.getInput('readme', { required: true }), 'utf8', function (err, data) {
+    fs.readFile(`${repo}` + core.getInput('readme', { required: true }), 'utf8', function (err, data) {
       if (err) {
         return console.log(err);
       }
