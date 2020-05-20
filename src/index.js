@@ -4,6 +4,9 @@ const core = require("@actions/core");
 const jwt = require('jsonwebtoken');
 const axios = require('axios');
 
+const METHOD_POST = 'POST';
+const METHOD_GET = 'GET';
+
 const key = core.getInput('key', { required: true});
 
 // Split the key into ID and SECRET
@@ -17,10 +20,12 @@ const token = jwt.sign({}, Buffer.from(secret, 'hex'), {
   audience: `/v3/admin/`
 });
 
+const headers = { 'Authorization': `Ghost ${token}` }
+
 const instanceConfig = {
   baseURL: core.getInput('url', { required: true }),
   timeout: parseInt(core.getInput('timeout') || 5000, 10),
-  headers: { Authorization: `Ghost ${token}` }
+  headers: { ...headers }
 }
 
 core.debug('Instance Configuration: ' + JSON.stringify(instanceConfig))
@@ -33,7 +38,6 @@ const instance = axios.create(instanceConfig);
     const data = method === METHOD_GET ? undefined : JSON.parse(core.getInput('data') || '{}')
 
     const requestData = {
-      auth,
       method,
       data
     }
