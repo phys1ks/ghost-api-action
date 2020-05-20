@@ -9,10 +9,9 @@ jobs:
         - name: Deploy Stage
             uses: phys1ks/ghost-api-action@master
             with:
-                url: 'https://blog.myghost.io/ghost/api/v3/admin/pages/{pageid}'
+                ghost-url: 'https://blog.myghost.io/ghost/api/v3/admin/pages/{pageid}'
                 method: 'PUT'
-                id: ${{ secrets.GHOST_ADMIN_ID }}
-                secret: ${{ secrets.GHOST_ADMIN_SECRET }}
+                key: ${{ secrets.GHOST_ADMIN_KEY }}
                 data: '{"pages":[{"title":"Updated page title","updated_at":"2020-05-19T23:30:37.000Z"}]}'
 ```
 
@@ -20,12 +19,11 @@ jobs:
 
 |Argument|  Description  |  Default  |
 |--------|---------------|-----------|
-|url     | Request URL   | _required_ Field |
+|ghost-url     | Request URL   | _required_ Field |
 |method  | Request Method| POST |
 |data    | Request Body Content as JSON String, only for POST / PUT / PATCH Requests | '{}' |
 |timeout| Request Timeout in ms | 5000 (5s) |
-|id| Ghost Admin API ID ||
-|secret| Ghost Admin API Secret ||
+|key| Ghost Admin API Key ||
 
 ### Output
 
