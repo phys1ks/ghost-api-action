@@ -53,6 +53,7 @@ const url = core.getInput('url', { required: true });
 const headers = { Authorization: `Ghost ${token}` };
 const payload = core.getInput('data', { required: true });
 
+console.log("Here comes the train!");
 
 axios.post(url, payload, { headers })
     .then(response => console.log(response))
