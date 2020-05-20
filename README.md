@@ -4,7 +4,7 @@ Send a call to a Ghost API from GitHub.
 
 Currently this is in development and not ready for universal use.
 
-Exmaple Usage:
+Example Usage:
 ```
 jobs:
     deployment:
