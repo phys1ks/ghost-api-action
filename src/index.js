@@ -13,11 +13,11 @@ const [id, secret] = key.split(':');
 const token = jwt.sign({}, Buffer.from(secret, 'hex'), {
   keyid: id,
   algorithm: 'HS256',
-  expiresIn: core.getInput('timeout'),
+  expiresIn: '5m',
   audience: `/v3/admin/`
 });
 
-/* const instanceConfig = {
+const instanceConfig = {
   baseURL: core.getInput('url', { required: true }),
   timeout: parseInt(core.getInput('timeout') || 5000, 10),
   headers: { Authorization: `Ghost ${token}` }
@@ -46,15 +46,13 @@ const instance = axios.create(instanceConfig);
   } catch (error) {
     core.setFailed(JSON.stringify({ code: error.response.code, message: error.response.data }))
   }
-})() */
+})()
 
-// Make an authenticated request to create a post
+/* // Make an authenticated request to create a post
 const url = core.getInput('url', { required: true });
 const headers = { Authorization: `Ghost ${token}` };
 const payload = core.getInput('data', { required: true });
 
-console.log("Here comes the train!");
-
 axios.post(url, payload, { headers })
     .then(response => console.log(response))
-    .catch(error => console.error(error));
+    .catch(error => console.error(error)); */
