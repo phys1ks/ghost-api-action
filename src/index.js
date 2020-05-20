@@ -22,6 +22,8 @@ const token = jwt.sign({}, Buffer.from(secret, 'hex'), {
 
 const headers = { 'Authorization': `Ghost ${token}` }
 
+core.debug('Parse this dammit')
+
 const instanceConfig = {
   baseURL: core.getInput('url', { required: true }),
   timeout: parseInt(core.getInput('timeout') || 5000, 10),
