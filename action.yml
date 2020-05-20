@@ -4,21 +4,18 @@ inputs:
     url:
         description: 'Ghost URL'
         required: true
-    method:
-        description: 'Method'
-        required: false
-        default: 'GET'
-    data:
-        description: 'Data to Send'
-        required: false
-        default: '{}'
     key:
         description: 'Your Ghost Admin API Key'
         required: true
-    timeout:
-        description: 'Request Timeout in Sec'
-        required: false
-        default: '300'
+    version:
+        description: 'API Version'
+        required: true
+    page:
+        description: 'ID of page to update'
+        required: true
+    readme:
+        description: 'Path to README.md'
+        required: true
 outputs:
     response:
         description: 'Ghost API Response'
