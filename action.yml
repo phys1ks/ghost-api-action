@@ -1,7 +1,7 @@
 name: 'Ghost API Action'
 description: 'Send a call to the Ghost API'
 inputs:
-    ghost-url:
+    url:
         description: 'Ghost URL'
         required: true
     method:
