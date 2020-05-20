@@ -14922,7 +14922,7 @@ api.pages.read({
 })
   .then((pages) => {
     fs = __webpack_require__(747)
-    fs.readFile(`${repo}` + core.getInput('readme', { required: true }), 'utf8', function (err, data) {
+    fs.readFile(`${repo}/` + core.getInput('readme', { required: true }), 'utf8', function (err, data) {
       if (err) {
         return console.log(err);
       }
