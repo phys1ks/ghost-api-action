@@ -1,39 +1,26 @@
 const core = require("@actions/core");
-const axios = require("axios");
 
-const METHOD_GET = 'GET'
-const METHOD_POST = 'POST'
+// Create a token without the client
+const jwt = require('jsonwebtoken');
+const axios = require('axios');
 
-let auth = undefined
-let customHeaders = {}
+const key = core.getInput('key', { required: true});
 
-if (!!core.getInput('customHeaders')) {
-  try {
-    customHeaders = JSON.parse(core.getInput('customHeaders'));
-  } catch(error) {
-    core.error('Could not parse customHeaders string value')
-  }
-}
+// Split the key into ID and SECRET
+const [id, secret] = key.split(':');
 
-const headers = { 'Content-Type': core.getInput('contentType') || 'application/json' }
-
-if (!!core.getInput('username') || !!core.getInput('password')) {
-  core.debug('Add BasicHTTP Auth config')
-
-  auth = {
-    username: core.getInput('username'),
-    password: core.getInput('password')
-  }
-}
-
-if (!!core.getInput('bearerToken')) {
-  headers['Authorization'] = `Bearer ${core.getInput('bearerToken')}`;
-}
+// Create the token (including decoding secret)
+const token = jwt.sign({}, Buffer.from(secret, 'hex'), {
+  keyid: id,
+  algorithm: 'HS256',
+  expiresIn: core.getInput('timeout'),
+  audience: `/v3/admin/`
+});
 
 const instanceConfig = {
-  baseURL: core.getInput('url', { required: true }),
+  baseURL: core.getInput('ghost-url', {required: true}),
   timeout: parseInt(core.getInput('timeout') || 5000, 10),
-  headers: { ...headers, ...customHeaders }
+  headers: { Authorization: `Ghost ${token}` }
 }
 
 core.debug('Instance Configuration: ' + JSON.stringify(instanceConfig))
@@ -60,3 +47,16 @@ const instance = axios.create(instanceConfig);
     core.setFailed(JSON.stringify({ code: error.response.code, message: error.response.data }))
   }
 })()
+
+
+/* 
+// Make an authenticated request to create a post
+const url = core.getInput('ghost-url', { required: true });
+const headers = { Authorization: `Ghost ${token}` };
+const payload = core.getInput('data', { required: true });
+
+
+axios.post(url, payload, { headers })
+    .then(response => console.log(response))
+    .catch(error => console.error(error));
+*/

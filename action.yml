@@ -1,37 +1,27 @@
-name: 'HTTP Request Action'
-description: 'Create any HTTP Request'
+name: 'Ghost API Action'
+description: 'Send a call to the Ghost API'
 inputs:
-    url:
-        description: 'Request URL'
+    ghost-url:
+        description: 'Ghost URL'
         required: true
     method:
-        description: 'Request Method'
+        description: 'Method'
         required: false
-        default: 'POST'
-    contentType:
-        description: 'Content Type'
-        required: false
-        default: 'application/json'
+        default: 'GET'
     data:
-        description: 'Request Body as JSON String'
+        description: 'Data to Send'
         required: false
         default: '{}'
-    username:
-        description: 'Auth Username'
-        required: false
-    password:
-        description: 'Auth Password'
-        required: false
+    key:
+        description: 'Your Ghost Admin API Key'
+        required: true
     timeout:
         description: 'Request Timeout in Sec'
         required: false
-        default: '5000'
-    bearerToken:
-        description: 'Bearer Authentication Token'
-        required: false
+        default: '300'
 outputs:
     response:
-        description: 'HTTP Response Content'
+        description: 'Ghost API Response'
 runs:
     using: 'node12'
     main: 'dist/index.js'
