@@ -20,12 +20,10 @@ const token = jwt.sign({}, Buffer.from(secret, 'hex'), {
   audience: `/v3/admin/`
 });
 
-const headers = { 'Authorization': `Ghost ${token}` }
-
 const instanceConfig = {
   baseURL: core.getInput('url', { required: true }),
   timeout: parseInt(core.getInput('timeout') || 5000, 10),
-  headers: { ...headers }
+  headers: { 'Authorization': `Ghost ${token}` }
 }
 
 core.debug('Instance Configuration: ' + JSON.stringify(instanceConfig))
